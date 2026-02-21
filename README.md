@@ -1,7 +1,7 @@
 macOS silently switches your mic to AirPods every time they connect. your voice goes from studio-quality 48kHz to walkie-talkie 16kHz mono. this fixes that.
 
 ```bash
-npx cli-disable-mic
+npx fix-my-mic
 ```
 
 compiles from source on your machine, installs a background daemon, no sudo needed. run the same command again to change settings or uninstall.
@@ -31,7 +31,7 @@ https://github.com/user-attachments/assets/6e24f816-4b3c-4b60-929d-e47be2871238
 ## install
 
 ```bash
-npx cli-disable-mic
+npx fix-my-mic
 ```
 
 don't have node? use curl:
@@ -95,7 +95,7 @@ launchctl bootout gui/$(id -u)/com.local.mic-guard
 run the install command again and pick "uninstall":
 
 ```bash
-npx cli-disable-mic
+npx fix-my-mic
 ```
 
 or manually:

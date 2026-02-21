@@ -2,7 +2,7 @@
 const { spawnSync } = require("child_process");
 
 if (process.platform !== "darwin") {
-  console.error("cli-disable-mic only works on macOS.");
+  console.error("fix-my-mic only works on macOS.");
   process.exit(1);
 }
 

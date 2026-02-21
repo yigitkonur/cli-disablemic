@@ -1,9 +1,9 @@
 {
-  "name": "cli-disable-mic",
+  "name": "fix-my-mic",
   "version": "1.0.0",
   "description": "stop macOS from using your AirPods as the default microphone. one command, runs forever.",
   "bin": {
-    "cli-disable-mic": "bin/cli-disable-mic.js"
+    "fix-my-mic": "bin/fix-my-mic.js"
   },
   "files": [
     "bin/"
