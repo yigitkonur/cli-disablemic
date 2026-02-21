@@ -7,7 +7,7 @@ one command. installs itself. runs forever. no app, no menu bar icon, no GUI. ju
 ## install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yigitkonur/macapp-noairpodsmic/main/install.sh | bash
+curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
 ```
 
 that's it. it compiles from source on your machine (no code signing, no quarantine, no gatekeeper drama), picks a mode, and starts a background daemon. no sudo needed.
@@ -17,8 +17,8 @@ that's it. it compiles from source on your machine (no code signing, no quaranti
 or if you're the git-clone type:
 
 ```bash
-git clone https://github.com/yigitkonur/macapp-noairpodsmic.git
-cd macapp-noairpodsmic
+git clone https://github.com/yigitkonur/cli-disablemic.git
+cd cli-disablemic
 ./install.sh
 ```
 
@@ -85,7 +85,7 @@ launchctl bootout gui/$(id -u)/com.local.mic-guard         # stop until next log
 run the install command again and pick "uninstall":
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yigitkonur/macapp-noairpodsmic/main/install.sh | bash
+curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
 ```
 
 or nuke it manually:

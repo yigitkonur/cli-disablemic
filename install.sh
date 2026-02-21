@@ -3,14 +3,14 @@
 # mic-guard — install, configure, or uninstall
 #
 # One command does everything:
-#   curl -fsSL https://raw.githubusercontent.com/yigitkonur/macapp-noairpodsmic/main/install.sh | bash
+#   curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
 #
 # First run:  installs mic-guard and lets you choose a mode
 # Re-run:     lets you change mode or uninstall
 #
 set -euo pipefail
 
-REPO_RAW="https://raw.githubusercontent.com/yigitkonur/macapp-noairpodsmic/main"
+REPO_RAW="https://raw.githubusercontent.com/yigitkonur/cli-disablemic/main"
 LABEL="com.local.mic-guard"
 INSTALL_DIR="${HOME}/.local/bin"
 INSTALL_PATH="${INSTALL_DIR}/mic-guard"

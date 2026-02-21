@@ -3,7 +3,7 @@
 # mic-guard uninstaller
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/yigitkonur/macapp-noairpodsmic/main/uninstall.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/yigitkonur/cli-disablemic/main/uninstall.sh | bash
 #   — or —
 #   ./uninstall.sh
 #
