@@ -2,6 +2,8 @@
 
 > every time i connect my AirPods, macOS silently switches my mic input to them. my voice goes from studio-quality 48kHz to walkie-talkie 16kHz mono. i got tired of manually switching it back. so i made this.
 
+https://github.com/user-attachments/assets/6e24f816-4b3c-4b60-929d-e47be2871238
+
 one command. installs itself. runs forever. no app, no menu bar icon, no GUI. just your MacBook's built-in mic, always.
 
 ## install
