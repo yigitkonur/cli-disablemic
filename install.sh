@@ -10,7 +10,7 @@
 #
 set -euo pipefail
 
-REPO_RAW="https://raw.githubusercontent.com/yigitkonur/cli-disablemic/main"
+REPO_RAW="https://raw.githubusercontent.com/yigitkonur/cli-disable-mic/main"
 LABEL="com.local.mic-guard"
 INSTALL_DIR="${HOME}/.local/bin"
 INSTALL_PATH="${INSTALL_DIR}/mic-guard"
