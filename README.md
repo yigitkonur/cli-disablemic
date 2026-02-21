@@ -1,20 +1,38 @@
-# 🙅🏻‍♂️ no airpods mic
+macOS silently switches your mic to AirPods every time they connect. your voice goes from studio-quality 48kHz to walkie-talkie 16kHz mono. this fixes that.
 
-> every time i connect my AirPods, macOS silently switches my mic input to them. my voice goes from studio-quality 48kHz to walkie-talkie 16kHz mono. i got tired of manually switching it back. so i made this.
+```bash
+npx fix-my-mic
+```
+
+compiles from source on your machine, installs a background daemon, no sudo needed. run the same command again to change settings or uninstall.
+
+[![macOS](https://img.shields.io/badge/macOS-12+-93450a.svg?style=flat-square)](https://support.apple.com/macos)
+[![swift](https://img.shields.io/badge/swift-single_file-93450a.svg?style=flat-square)](https://www.swift.org/)
+[![license](https://img.shields.io/badge/license-MIT-grey.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+---
+
+## demo
 
 https://github.com/user-attachments/assets/6e24f816-4b3c-4b60-929d-e47be2871238
 
-one command. installs itself. runs forever. no app, no menu bar icon, no GUI. just your MacBook's built-in mic, always.
+---
+
+## what it does
+
+~600-line Swift daemon that talks directly to CoreAudio. no dependencies, no electron, no python, no node. just Apple frameworks.
+
+- **event-driven, not polling** — registers CoreAudio listeners, fully idle at 0.0% CPU between events
+- **finds built-in mic by transport type** — works on MacBook Pro, Air, iMac, Mac Mini, Mac Studio
+- **blocks Bluetooth input** — classic, LE, and iPhone Continuity mic. USB mics left alone
+- **defeats AirPods HFP flip-backs** — re-asserts built-in mic every 0.5s for 5 seconds after a change, then goes idle
+- **Apple Unified Logging** — uses `os_log`, system handles rotation
 
 ## install
 
 ```bash
 npx fix-my-mic
 ```
-
-that's it. picks a mode, compiles from source on your machine (no code signing, no quarantine, no gatekeeper drama), and starts a background daemon. no sudo needed.
-
-**want to change settings or uninstall? run the same command again.**
 
 don't have node? use curl:
 
@@ -28,63 +46,49 @@ or clone it:
 git clone https://github.com/yigitkonur/cli-disablemic.git && cd cli-disablemic && ./install.sh
 ```
 
-### requirements
-
-- macOS 12 (Monterey) or later
-- Xcode Command Line Tools (the installer will prompt you if missing)
-
-## how it works
-
-it's a ~600-line Swift daemon that talks directly to CoreAudio. no dependencies, no third-party libraries, no electron, no python, no node. just Apple frameworks.
-
-1. **event-driven, not polling.** registers CoreAudio listeners on the default input device and the device list. the instant something changes, it gets a callback. between events, it's fully idle at 0.0% CPU.
-
-2. **finds the built-in mic by transport type**, not by name. works on MacBook Pro, MacBook Air, iMac, Mac Mini, Mac Studio — any Mac with a built-in microphone.
-
-3. **blocks Bluetooth input** (classic and LE) and unknown wireless transports like iPhone Continuity mic. USB mics and aggregate devices are left alone.
-
-4. **defeats AirPods HFP flip-backs.** AirPods sometimes re-negotiate the input 1-3 seconds after connecting. mic-guard re-asserts the built-in mic every 0.5s for 5 seconds after a change, then goes fully idle again.
-
-5. **uses Apple Unified Logging** (`os_log`), not log files. the system handles rotation automatically.
+requires macOS 12+ and Xcode Command Line Tools (installer prompts if missing).
 
 ## two modes
 
 the installer asks you to pick:
 
-### 1) always block (default)
+### always block (default)
 
-your built-in mic is always the default. AirPods and Bluetooth mics are never used as input. install and forget.
+built-in mic is always the default. AirPods and Bluetooth mics never used as input. install and forget.
 
-### 2) respect manual override
+### respect manual override
 
-same as above, but if you switch back to AirPods within 10 seconds of mic-guard reverting it, mic-guard goes "ok, you clearly want this" and pauses itself for 1 hour. after the hour, it resumes automatically.
+same as above, but if you switch back to AirPods within 10 seconds of mic-guard reverting it, it pauses for 1 hour then resumes. for when you actually need your AirPods mic on a call.
 
-perfect for when you actually need your AirPods mic for a call.
-
-## resource usage
-
-| metric | value |
-|--------|-------|
-| CPU (idle) | 0.0% |
-| CPU (during 5s stabilization) | ~0.0% (a few microsecond ticks) |
-| memory | ~12 MB RSS |
-| disk | ~65 KB binary |
-| network | none |
-
-## commands
+## usage
 
 ```bash
-# need your AirPods mic for a sec?
 mic-guard pause           # pause indefinitely
 mic-guard pause 30        # pause for 30 min, auto-resumes
 mic-guard resume          # back to blocking
 mic-guard status          # what's going on?
-
-# nerdy stuff
-log stream --predicate 'subsystem == "com.local.mic-guard"' --style compact
-launchctl kickstart -k gui/$(id -u)/com.local.mic-guard   # restart
-launchctl bootout gui/$(id -u)/com.local.mic-guard         # stop until next login
 ```
+
+```bash
+# logs
+log stream --predicate 'subsystem == "com.local.mic-guard"' --style compact
+
+# restart
+launchctl kickstart -k gui/$(id -u)/com.local.mic-guard
+
+# stop until next login
+launchctl bootout gui/$(id -u)/com.local.mic-guard
+```
+
+## resource usage
+
+| metric | value |
+|:---|:---|
+| CPU (idle) | 0.0% |
+| CPU (stabilization) | ~0.0% (microsecond ticks) |
+| memory | ~12 MB RSS |
+| disk | ~65 KB binary |
+| network | none |
 
 ## uninstall
 
@@ -94,7 +98,7 @@ run the install command again and pick "uninstall":
 npx fix-my-mic
 ```
 
-or nuke it manually:
+or manually:
 
 ```bash
 launchctl bootout gui/$(id -u)/com.local.mic-guard
@@ -103,27 +107,23 @@ rm ~/Library/LaunchAgents/com.local.mic-guard.plist
 rm -rf ~/.config/mic-guard
 ```
 
-## why not just use an app?
+## why not a GUI app?
 
-there are GUI apps that do this — [SoundAnchor](https://apps.kopiro.me/soundanchor/), [AirPods Sound Quality Fixer](https://github.com/milgra/airpodssoundqualityfixer), [audio-device-blocker](https://github.com/jbgosselin/audio-device-blocker). they work, but:
+there are apps that do this — SoundAnchor, AirPods Sound Quality Fixer, audio-device-blocker. they work, but need code signing or `xattr -cr` to bypass Gatekeeper, run a menu bar icon, and require manual download.
 
-- need code signing/notarization or `xattr -cr` to bypass Gatekeeper
-- run a menu bar icon you don't need
-- may not survive macOS updates
-- require manual download and drag-to-Applications
+this compiles from source on your machine (born trusted), runs as a headless `launchd` agent, and is a single Swift file you can read in 5 minutes.
 
-this compiles from source on your machine (born trusted, no signing needed), runs as a headless `launchd` agent (no GUI), and is a single Swift file you can read in 5 minutes.
+## internals
 
-## the nerdy details
-
-single file: `main.swift`. only uses Apple frameworks (`CoreAudio`, `Foundation`, `os.log`). compiles with `swiftc` — no Xcode project, no Package.swift, no CocoaPods, no SPM.
+single file: `main.swift`. only Apple frameworks (`CoreAudio`, `Foundation`, `os.log`). compiles with `swiftc` — no Xcode project, no Package.swift, no SPM.
 
 key CoreAudio APIs:
+
 - `AudioObjectAddPropertyListener` — event callbacks
 - `AudioObjectGetPropertyData` / `SetPropertyData` — read/write device properties
-- `kAudioHardwarePropertyDefaultInputDevice` — the system default input
+- `kAudioHardwarePropertyDefaultInputDevice` — system default input
 - `kAudioDevicePropertyTransportType` — distinguish built-in from Bluetooth
 
 ## license
 
-MIT — do whatever you want with it.
+MIT
