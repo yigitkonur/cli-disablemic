@@ -9,19 +9,23 @@ one command. installs itself. runs forever. no app, no menu bar icon, no GUI. ju
 ## install
 
 ```bash
-curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
+npx fix-my-mic
 ```
 
-that's it. it compiles from source on your machine (no code signing, no quarantine, no gatekeeper drama), picks a mode, and starts a background daemon. no sudo needed.
+that's it. picks a mode, compiles from source on your machine (no code signing, no quarantine, no gatekeeper drama), and starts a background daemon. no sudo needed.
 
 **want to change settings or uninstall? run the same command again.**
 
-or if you're the git-clone type:
+don't have node? use curl:
 
 ```bash
-git clone https://github.com/yigitkonur/cli-disablemic.git
-cd cli-disablemic
-./install.sh
+curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
+```
+
+or clone it:
+
+```bash
+git clone https://github.com/yigitkonur/cli-disablemic.git && cd cli-disablemic && ./install.sh
 ```
 
 ### requirements
@@ -87,7 +91,7 @@ launchctl bootout gui/$(id -u)/com.local.mic-guard         # stop until next log
 run the install command again and pick "uninstall":
 
 ```bash
-curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
+npx fix-my-mic
 ```
 
 or nuke it manually:

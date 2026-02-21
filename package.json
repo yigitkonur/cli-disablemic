@@ -1,0 +1,31 @@
+{
+  "name": "fix-my-mic",
+  "version": "1.0.0",
+  "description": "stop macOS from using your AirPods as the default microphone. one command, runs forever.",
+  "bin": {
+    "fix-my-mic": "bin/fix-my-mic.js"
+  },
+  "files": [
+    "bin/"
+  ],
+  "os": [
+    "darwin"
+  ],
+  "keywords": [
+    "airpods",
+    "microphone",
+    "macos",
+    "audio",
+    "bluetooth",
+    "hfp",
+    "coreaudio",
+    "built-in-mic"
+  ],
+  "author": "Yigit Konur (https://yigitkonur.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yigitkonur/cli-disablemic"
+  },
+  "homepage": "https://github.com/yigitkonur/cli-disablemic#readme"
+}
