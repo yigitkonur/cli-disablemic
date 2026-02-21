@@ -43,7 +43,7 @@ curl -fsSL https://yigitkonur.com/disable-airpods-mic.sh | bash
 or clone it:
 
 ```bash
-git clone https://github.com/yigitkonur/cli-disablemic.git && cd cli-disablemic && ./install.sh
+git clone https://github.com/yigitkonur/cli-disable-mic.git && cd cli-disable-mic && ./install.sh
 ```
 
 requires macOS 12+ and Xcode Command Line Tools (installer prompts if missing).
