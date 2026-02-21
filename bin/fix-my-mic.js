@@ -10,7 +10,7 @@ const r = spawnSync(
   "bash",
   [
     "-c",
-    'eval "$(curl -fsSL https://raw.githubusercontent.com/yigitkonur/cli-disable-mic/main/install.sh)"',
+    'eval "$(curl -fsSL https://raw.githubusercontent.com/yigitkonur/cli-fix-my-mic/main/install.sh)"',
   ],
   { stdio: "inherit" }
 );
