@@ -6,7 +6,10 @@
     "fix-my-mic": "bin/fix-my-mic.js"
   },
   "files": [
-    "bin/"
+    "bin/",
+    "install.sh",
+    "uninstall.sh",
+    "main.swift"
   ],
   "os": [
     "darwin"
